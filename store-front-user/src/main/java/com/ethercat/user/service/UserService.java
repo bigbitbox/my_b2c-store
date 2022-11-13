@@ -1,6 +1,7 @@
 package com.ethercat.user.service;
 
 import com.ethercat.param.UserCheckParam;
+import com.ethercat.param.UserLoginParam;
 import com.ethercat.pojo.User;
 import com.ethercat.utils.R;
 import org.springframework.stereotype.Service;
@@ -16,4 +17,11 @@ public interface UserService {
      * @return
      */
     R register(User user);
+
+    /**
+     * 登录业务
+     * @param userLoginParam
+     * @return 结果001 004
+     */
+    R login(UserLoginParam userLoginParam);
 }

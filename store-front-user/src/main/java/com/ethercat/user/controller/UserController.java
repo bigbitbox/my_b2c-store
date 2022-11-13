@@ -1,6 +1,7 @@
 package com.ethercat.user.controller;
 
 import com.ethercat.param.UserCheckParam;
+import com.ethercat.param.UserLoginParam;
 import com.ethercat.pojo.User;
 import com.ethercat.user.service.UserService;
 import com.ethercat.utils.R;
@@ -54,4 +55,12 @@ public class UserController {
         return userservice.register(user);
     }
 
+    @PostMapping("login")
+    public R login(@RequestBody @Validated  UserLoginParam userLoginParam,BindingResult result){
+        if (result.hasErrors()){
+            return R.fail("参数异常，不可登录！");
+        }
+
+        return userservice.login(userLoginParam);
+    }
 }
