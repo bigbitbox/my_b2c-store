@@ -1,6 +1,7 @@
 package com.ethercat.user.controller;
 
 import com.ethercat.param.UserCheckParam;
+import com.ethercat.pojo.User;
 import com.ethercat.user.service.UserService;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,4 +44,14 @@ public class UserController {
 
         return userservice.check(userCheckParam);
     }
+
+    @PostMapping("register")
+    public R register(@RequestBody @Validated User user, BindingResult result){
+        if (result.hasErrors()){
+            return R.fail("参数异常，不可注册！");
+
+        }
+        return userservice.register(user);
+    }
+
 }
