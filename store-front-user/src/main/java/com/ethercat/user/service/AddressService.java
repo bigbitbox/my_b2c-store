@@ -1,5 +1,6 @@
 package com.ethercat.user.service;
 
+import com.ethercat.pojo.Address;
 import com.ethercat.utils.R;
 
 /**
@@ -17,4 +18,8 @@ public interface AddressService {
      * @return 001 004
      */
     R list(Integer userId);
+
+    R save(Address address);
+
+    R remove(Integer id);
 }
