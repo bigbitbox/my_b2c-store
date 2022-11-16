@@ -1,8 +1,8 @@
 spring:
   application:
-    name: carousel-service
+    name: product-service
   cloud:
     nacos:
       server-addr: 139.159.142.252:8848
 server:
-  port: 3003
+  port: 3004

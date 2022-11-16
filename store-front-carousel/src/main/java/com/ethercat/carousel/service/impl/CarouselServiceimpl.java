@@ -40,6 +40,6 @@ public class CarouselServiceimpl implements CarouselService {
 
 
 
-        return null;
+        return R.ok(collect);
     }
 }
