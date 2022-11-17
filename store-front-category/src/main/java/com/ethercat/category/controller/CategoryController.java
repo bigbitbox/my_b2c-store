@@ -1,15 +1,15 @@
 package com.ethercat.category.controller;
 
 import com.ethercat.category.service.CategoryService;
+import com.ethercat.param.ProductHotParam;
 import com.ethercat.utils.R;
 import io.netty.util.internal.StringUtil;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: b2c-store
@@ -31,4 +31,13 @@ public class CategoryController {
         }
         return categoryService.byName(categoryName);
     }
+
+    @PostMapping("hots")
+    public R hotsCategory(@RequestBody @Validated ProductHotParam productHotParam, BindingResult result){
+        if (result.hasErrors()){
+            return R.fail("类别查询失败");
+        }
+        return categoryService.hotsCategory(productHotParam);
+    }
+
 }

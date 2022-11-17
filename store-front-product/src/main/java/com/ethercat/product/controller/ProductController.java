@@ -1,5 +1,6 @@
 package com.ethercat.product.controller;
 
+import com.ethercat.param.ProductHotParam;
 import com.ethercat.param.ProductPromoParam;
 import com.ethercat.product.service.ProductService;
 import com.ethercat.utils.R;
@@ -31,6 +32,14 @@ public class ProductController {
             return  R.fail("数据查询失败！");
         }
         return productService.promo(productPromoParam.getCategoryName());
+    }
+
+    @PostMapping("hots")
+    public R hots(@RequestBody @Validated ProductHotParam productHotParam, BindingResult result){
+        if (result.hasErrors()){
+            return  R.fail("数据查询失败！");
+        }
+        return productService.hots(productHotParam);
     }
 
 }

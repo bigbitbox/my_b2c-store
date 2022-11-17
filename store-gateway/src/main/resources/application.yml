@@ -22,4 +22,4 @@ spring:
         - id: category-service # 类别服务
           uri: lb://category-service #使用负载均衡,调用服务名,这是服务名
           predicates:
-            - Path=/category/** # 类别服务,转发到carousel服务
+            - Path=/category/** # 类别服务,转发到category服务
