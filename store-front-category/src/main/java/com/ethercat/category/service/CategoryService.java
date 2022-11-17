@@ -13,4 +13,6 @@ public interface CategoryService {
      * @return
      */
     R hotsCategory(ProductHotParam productHotParam);
+
+    R list();
 }

@@ -14,6 +14,9 @@ public interface CategoryClient {
     @GetMapping("/category/promo/{categoryName}")
     R byName(@PathVariable String categoryName);
 
-    @PostMapping("hots")
+    @PostMapping("/category/hots")
     R hots(@RequestBody ProductHotParam productHotParam);
+
+    @GetMapping("/category/list")
+    R list();
 }

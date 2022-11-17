@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.clients.CategoryClient;
 import com.ethercat.param.ProductHotParam;
+import com.ethercat.param.ProductIdsParam;
+import com.ethercat.pojo.Category;
 import com.ethercat.pojo.Product;
 import com.ethercat.product.mapper.ProductMapper;
 import com.ethercat.product.service.ProductService;
@@ -77,7 +79,7 @@ public class ProductServiceimpl implements ProductService {
 //        Category category = (Category) r.getData();
         LinkedHashMap<String,Object> map = (LinkedHashMap<String, Object>) r.getData();
 
-        Integer categoryId = (Integer) map.get("categoryId");
+        Integer categoryId = (Integer) map.get("category_id");
 
         //封装查询参数
 
@@ -95,5 +97,42 @@ public class ProductServiceimpl implements ProductService {
 
         return R.ok("数据查询成功",productList);
 
+    }
+
+
+    @Override
+    public R clist() {
+
+        R r = categoryClient.list();
+        log.info("ProductServiceimpl.clist业务结束，结果：{}",r);
+
+        return r;
+    }
+
+    /**
+     * 按照类别查询
+     *
+     * @param productIdsParam
+     * @return
+     */
+    @Override
+    public R byCategory(ProductIdsParam productIdsParam) {
+
+
+        List<Integer> categoryID = productIdsParam.getCategoryID();
+
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+
+        if (!categoryID.isEmpty()){
+            queryWrapper.in("category_id",categoryID);
+        }
+
+        IPage<Product> page = new Page<>(productIdsParam.getCurrentPage(),productIdsParam.getPageSize());
+
+        page = productMapper.selectPage(page, queryWrapper);
+
+        R ok = R.ok("查询成功", page.getRecords(),page.getTotal());
+
+        return ok;
     }
 }

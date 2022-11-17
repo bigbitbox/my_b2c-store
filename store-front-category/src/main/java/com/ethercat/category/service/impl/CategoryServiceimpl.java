@@ -53,4 +53,13 @@ public class CategoryServiceimpl implements CategoryService {
         log.info("CategoryServiceimpl.hotsCategory业务结束，结果：{}",ok);
         return ok;
     }
+
+    @Override
+    public R list() {
+        List<Category> categories = categoryMapper.selectList(null);
+        R ok = R.ok("类别全部数据查询成功", categories);
+
+        log.info("CategoryServiceimpl.list业务结束，结果：{}",ok);
+        return ok;
+    }
 }
