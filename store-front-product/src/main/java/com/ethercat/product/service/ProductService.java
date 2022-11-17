@@ -1,6 +1,7 @@
 package com.ethercat.product.service;
 
 import com.ethercat.param.ProductHotParam;
+import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
 import com.ethercat.utils.R;
 
@@ -24,9 +25,24 @@ public interface ProductService {
      * 按照类别查询
      * 通用型服务：
      *  传入了类别id，根据id查询并分页
-     *  如果没有传入类别的id，查询全部
+     *  如果没有传入类别的id。
      * @param productIdsParam
      * @return
      */
     R byCategory(ProductIdsParam productIdsParam);
+
+
+    /**根据商品id查询商品信息
+     *
+     * @param productID
+     * @return
+     */
+    R detail(Integer productID);
+
+    /**
+     * 查询商品对应的图片集合
+     * @param productID
+     * @return
+     */
+    R pictures(Integer productID);
 }

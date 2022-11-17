@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.clients.CategoryClient;
 import com.ethercat.param.ProductHotParam;
+import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
 import com.ethercat.pojo.Category;
+import com.ethercat.pojo.Picture;
 import com.ethercat.pojo.Product;
+import com.ethercat.product.mapper.PictureMapper;
 import com.ethercat.product.mapper.ProductMapper;
 import com.ethercat.product.service.ProductService;
 import com.ethercat.utils.R;
@@ -27,6 +30,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class ProductServiceimpl implements ProductService {
+
+    @Autowired
+    PictureMapper pictureMapper;
 
     @Autowired
     private CategoryClient categoryClient;
@@ -132,6 +138,44 @@ public class ProductServiceimpl implements ProductService {
         page = productMapper.selectPage(page, queryWrapper);
 
         R ok = R.ok("查询成功", page.getRecords(),page.getTotal());
+
+        return ok;
+    }
+
+    /**
+     * 根据商品id查询商品信息
+     *
+     * @param productID
+     * @return
+     */
+    @Override
+    public R detail(Integer productID) {
+
+        Product product = productMapper.selectById(productID);
+
+        R ok = R.ok(product);
+        log.info("ProductServiceimpl.detail业务结束，结果：{}",ok);
+
+        return ok;
+    }
+
+    /**
+     * 查询商品对应的图片集合
+     *
+     * @param productID
+     * @return
+     */
+    @Override
+    public R pictures(Integer productID) {
+
+        QueryWrapper<Picture> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_id",productID);
+
+        List<Picture> pictures = pictureMapper.selectList(queryWrapper);
+
+        R ok = R.ok(pictures);
+
+        log.info("ProductServiceimpl.pictures业务结束，结果：{}",ok);
 
         return ok;
     }

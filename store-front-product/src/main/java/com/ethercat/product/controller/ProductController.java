@@ -1,6 +1,7 @@
 package com.ethercat.product.controller;
 
 import com.ethercat.param.ProductHotParam;
+import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
 import com.ethercat.param.ProductPromoParam;
 import com.ethercat.product.service.ProductService;
@@ -64,6 +65,22 @@ public class ProductController {
         }
 
         return productService.byCategory(productIdsParam);
+    }
+
+    @PostMapping("detail")
+    public R detail(@RequestBody @Validated ProductIdParam productIdParam,BindingResult result){
+        if (result.hasErrors()) {
+            return R.fail("商品查询失败");
+        }
+        return productService.detail(productIdParam.getProductID());
+    }
+
+    @PostMapping("pictures")
+    public R pictures(@RequestBody @Validated ProductIdParam productIdParam,BindingResult result){
+        if (result.hasErrors()) {
+            return R.fail("商品图片查询失败");
+        }
+        return productService.pictures(productIdParam.getProductID());
     }
 
 }
