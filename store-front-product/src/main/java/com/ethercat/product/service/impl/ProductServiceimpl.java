@@ -179,4 +179,18 @@ public class ProductServiceimpl implements ProductService {
 
         return ok;
     }
+
+    /**
+     * 搜索服务调用，获取全部商品数据进行同步
+     *
+     * @return 商品数据集合
+     */
+    @Override
+    public List<Product> allList() {
+        List<Product> products = productMapper.selectList(null);
+
+        log.info("ProductServiceimpl.allList业务结束，结果：{}",products.size());
+
+        return products;
+    }
 }

@@ -3,7 +3,10 @@ package com.ethercat.product.service;
 import com.ethercat.param.ProductHotParam;
 import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
+import com.ethercat.pojo.Product;
 import com.ethercat.utils.R;
+
+import java.util.List;
 
 public interface ProductService {
     R promo(String categoryName);
@@ -45,4 +48,10 @@ public interface ProductService {
      * @return
      */
     R pictures(Integer productID);
+
+    /**
+     * 搜索服务调用，获取全部商品数据进行同步
+     * @return 商品数据集合
+     */
+    List<Product> allList();
 }
