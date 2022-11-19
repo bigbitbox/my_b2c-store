@@ -1,9 +1,6 @@
 package com.ethercat.product.controller;
 
-import com.ethercat.param.ProductHotParam;
-import com.ethercat.param.ProductIdParam;
-import com.ethercat.param.ProductIdsParam;
-import com.ethercat.param.ProductPromoParam;
+import com.ethercat.param.*;
 import com.ethercat.product.service.ProductService;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +78,11 @@ public class ProductController {
             return R.fail("商品图片查询失败");
         }
         return productService.pictures(productIdParam.getProductID());
+    }
+
+    @PostMapping("search")
+    public R search(@RequestBody ProductSearchParam productSearchParam){
+        return productService.search(productSearchParam);
     }
 
 }

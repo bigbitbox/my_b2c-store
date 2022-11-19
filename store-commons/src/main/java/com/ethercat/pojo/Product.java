@@ -3,6 +3,7 @@ package com.ethercat.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.tracing.dtrace.ArgsAttributes;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import java.io.Serializable;
 @TableName("product")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product implements Serializable {
 
     public static final Long serialVersionUID = 1L;

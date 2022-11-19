@@ -13,12 +13,9 @@ import java.util.List;
  **/
 
 @Data
-public class ProductIdsParam {
+public class ProductIdsParam extends PageParam{
 
     @NotNull
     private List<Integer> categoryID;
-
-    private int currentPage = 1;
-    private int pageSize = 15;
 
 }

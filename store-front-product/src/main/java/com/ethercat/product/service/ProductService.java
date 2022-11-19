@@ -3,6 +3,7 @@ package com.ethercat.product.service;
 import com.ethercat.param.ProductHotParam;
 import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
+import com.ethercat.param.ProductSearchParam;
 import com.ethercat.pojo.Product;
 import com.ethercat.utils.R;
 
@@ -54,4 +55,11 @@ public interface ProductService {
      * @return 商品数据集合
      */
     List<Product> allList();
+
+    /**搜索业务，需要调用搜索服务
+     *
+     * @param productSearchParam
+     * @return
+     */
+    R search(ProductSearchParam productSearchParam);
 }

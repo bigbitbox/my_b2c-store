@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.clients.CategoryClient;
+import com.ethercat.clients.SearchClient;
 import com.ethercat.param.ProductHotParam;
 import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
+import com.ethercat.param.ProductSearchParam;
 import com.ethercat.pojo.Category;
 import com.ethercat.pojo.Picture;
 import com.ethercat.pojo.Product;
@@ -36,6 +38,10 @@ public class ProductServiceimpl implements ProductService {
 
     @Autowired
     private CategoryClient categoryClient;
+
+    @Autowired
+    private SearchClient searchClient;
+
 
     @Autowired
     private ProductMapper productMapper;
@@ -192,5 +198,18 @@ public class ProductServiceimpl implements ProductService {
         log.info("ProductServiceimpl.allList业务结束，结果：{}",products.size());
 
         return products;
+    }
+
+    /**
+     * 搜索业务，需要调用搜索服务
+     *
+     * @param productSearchParam
+     * @return
+     */
+    @Override
+    public R search(ProductSearchParam productSearchParam) {
+        R r = searchClient.search(productSearchParam);
+        log.info("ProductServiceimpl.search业务结束，结果：{}",r);
+        return r;
     }
 }
