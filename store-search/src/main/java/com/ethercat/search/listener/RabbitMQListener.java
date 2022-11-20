@@ -4,7 +4,7 @@ import com.ethercat.doc.ProductDoc;
 import com.ethercat.pojo.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
+//import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;

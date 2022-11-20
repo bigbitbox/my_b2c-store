@@ -62,4 +62,11 @@ public interface ProductService {
      * @return
      */
     R search(ProductSearchParam productSearchParam);
+
+    /**
+     * 根据商品id集合查询商品信息
+     * @param productIds
+     * @return
+     */
+    R ids(List<Integer> productIds);
 }

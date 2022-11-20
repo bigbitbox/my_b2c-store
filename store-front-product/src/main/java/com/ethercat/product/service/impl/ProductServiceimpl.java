@@ -221,4 +221,25 @@ public class ProductServiceimpl implements ProductService {
         log.info("ProductServiceimpl.search业务结束，结果：{}",r);
         return r;
     }
+
+    /**
+     * 根据商品id集合查询商品信息
+     *  __用于查询收藏的商品
+     * @param productIds
+     * @return
+     */
+    @Cacheable(value = "list.product",key = "#productIds")
+    @Override
+    public R ids(List<Integer> productIds) {
+
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("product_id",productIds);
+
+        List<Product> productList = productMapper.selectList(queryWrapper);
+
+        R ok = R.ok("id商品集合查询成功！", productList);
+
+        log.info("ProductServiceimpl.ids业务结束，结果：{}",ok);
+        return ok;
+    }
 }
