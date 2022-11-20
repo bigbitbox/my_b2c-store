@@ -7,6 +7,7 @@ import com.ethercat.pojo.Carousel;
 import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class CarouselServiceimpl implements CarouselService {
     private CarouselMapper carouselMapper;
 
 
+    @Cacheable(value = "list.carousel",key = "#root.methodName",cacheManager = "cacheManagerDay")
     @Override
     public R list() {
 

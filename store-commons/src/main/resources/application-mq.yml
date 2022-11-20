@@ -1,10 +1,10 @@
 spring:
   rabbitmq:
-    host: 124.221.70.206
+    host: 139.159.142.252
     port: 5672
     virtual-host: /
     username: root
-    password: 123456
+    password: myrabbitmq
     listener:
       simple:
         prefetch: 1   # 预先分配1个 能者多劳

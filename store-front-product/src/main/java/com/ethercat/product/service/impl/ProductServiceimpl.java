@@ -18,6 +18,7 @@ import com.ethercat.product.service.ProductService;
 import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -46,6 +47,7 @@ public class ProductServiceimpl implements ProductService {
     @Autowired
     private ProductMapper productMapper;
 
+    @Cacheable(value = "list.product", key = "#productHotParam.categoryName")
     @Override
     public R hots(ProductHotParam productHotParam) {
         //1.调用类别
@@ -75,6 +77,7 @@ public class ProductServiceimpl implements ProductService {
         return ok;
     }
 
+    @Cacheable(value = "list.product", key = "#categoryName", cacheManager = "cacheManagerHour")
     @Override
     public R promo(String categoryName) {
 
@@ -122,11 +125,14 @@ public class ProductServiceimpl implements ProductService {
     }
 
     /**
-     * 按照类别查询
+     * 通用性业务，
+     * 传入了类别id，根据id查询并分页
+     * 没有传入类别id，查询全部出
      *
      * @param productIdsParam
      * @return
      */
+    @Cacheable(value = "list.product", key = "#productIdsParam.categoryID+'-'+#productIdsParam.currentPage+'-'+#productIdsParam.pageSize")
     @Override
     public R byCategory(ProductIdsParam productIdsParam) {
 
@@ -154,6 +160,7 @@ public class ProductServiceimpl implements ProductService {
      * @param productID
      * @return
      */
+    @Cacheable(value = "product", key = "#productID")
     @Override
     public R detail(Integer productID) {
 
@@ -171,6 +178,7 @@ public class ProductServiceimpl implements ProductService {
      * @param productID
      * @return
      */
+    @Cacheable(value = "picture",key = "#productID")
     @Override
     public R pictures(Integer productID) {
 
@@ -191,6 +199,7 @@ public class ProductServiceimpl implements ProductService {
      *
      * @return 商品数据集合
      */
+    @Cacheable(value = "list.category",key = "#root.methodName", cacheManager = "cacheManagerDay")
     @Override
     public List<Product> allList() {
         List<Product> products = productMapper.selectList(null);
