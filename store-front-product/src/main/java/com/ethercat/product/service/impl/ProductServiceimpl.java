@@ -1,5 +1,6 @@
 package com.ethercat.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -241,5 +242,21 @@ public class ProductServiceimpl implements ProductService {
 
         log.info("ProductServiceimpl.ids业务结束，结果：{}",ok);
         return ok;
+    }
+
+    /**
+     * 根据商品id查询商品id集合
+     *
+     * @param productIds
+     * @return
+     */
+    @Override
+    public List<Product> cartList(List<Integer> productIds) {
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("product_id",productIds);
+
+        List<Product> productList = productMapper.selectList(queryWrapper);
+        log.info("ProductServiceimpl.cartList业务结束，结果：{}",productList);
+        return productList;
     }
 }
