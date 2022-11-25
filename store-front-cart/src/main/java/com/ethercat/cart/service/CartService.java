@@ -1,6 +1,7 @@
 package com.ethercat.cart.service;
 
 import com.ethercat.param.CartSaveParam;
+import com.ethercat.pojo.Cart;
 import com.ethercat.utils.R;
 
 public interface CartService {
@@ -17,4 +18,18 @@ public interface CartService {
      * @return 确保要返回一个数组
      */
     R list(Integer userId);
+
+    /**
+     * 更新购物车业务
+     * @param cart
+     * @return
+     */
+    R update(Cart cart);
+
+    /**
+     * 删除购物车数据
+     * @param cart
+     * @return
+     */
+    R remove(Cart cart);
 }

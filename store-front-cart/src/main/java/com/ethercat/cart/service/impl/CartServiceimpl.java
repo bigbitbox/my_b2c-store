@@ -131,4 +131,55 @@ public class CartServiceimpl implements CartService {
 
         return ok;
     }
+
+    /**
+     * 更新购物车业务
+     * 1.查询商品数据
+     * 2.判断库存是否可用
+     * 3.正常修改即可
+     * @param cart
+     * @return
+     */
+    @Override
+    public R update(Cart cart) {
+
+        ProductIdParam productIdParam = new ProductIdParam();
+        productIdParam.setProductID(cart.getProductId());
+        Product product = productClient.productDetail(productIdParam);
+
+        if (cart.getNum() > product.getProductNum()) {
+            log.info("CartServiceimpl.update业务结束，结果：{}","修改失败！库存不足");
+            return R.fail("修改失败！库存不足");
+        }
+
+        QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",cart.getUserId());
+        queryWrapper.eq("product_id",cart.getProductId());
+
+        Cart newCart = cartMapper.selectOne(queryWrapper);
+
+        newCart.setNum(cart.getNum());
+
+        int rows = cartMapper.updateById(newCart);
+        log.info("CartServiceimpl.update业务结束，结果：{}",rows);
+        return R.ok("修改购物车数量成功");
+    }
+
+    /**
+     * 删除购物车数据
+     *
+     * @param cart
+     * @return
+     */
+    @Override
+    public R remove(Cart cart) {
+        QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",cart.getUserId());
+        queryWrapper.eq("product_id",cart.getProductId());
+
+        int rows = cartMapper.delete(queryWrapper);
+        log.info("CartServiceimpl.remove业务结束，结果：{}",rows);
+
+        return R.ok("删除购物车数据成功");
+    }
 }

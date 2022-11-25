@@ -2,6 +2,7 @@ package com.ethercat.cart.controller;
 
 import com.ethercat.param.CartListParam;
 import com.ethercat.param.CartSaveParam;
+import com.ethercat.pojo.Cart;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -50,5 +51,15 @@ public class CartController {
         }
 
         return R.ok("测试",cartSaveParam);
+    }
+
+    @PostMapping("update")
+    public R update(@RequestBody Cart cart){
+        return cartService.update(cart);
+    }
+
+    @PostMapping("remove")
+    public R remove(@RequestBody Cart cart){
+        return cartService.remove(cart);
     }
 }
