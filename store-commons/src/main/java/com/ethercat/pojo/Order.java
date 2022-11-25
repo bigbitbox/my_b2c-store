@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Data
 @TableName("orders")
 public class Order implements Serializable {
+    public static final Long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Integer id;

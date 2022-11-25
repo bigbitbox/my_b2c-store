@@ -1,5 +1,7 @@
 package com.ethercat.to;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @create: 2022-11-22 12:05
  **/
 
+@Data
 public class OrderToProduct implements Serializable {
 
     public static final Long serialVersionUID = 1L;

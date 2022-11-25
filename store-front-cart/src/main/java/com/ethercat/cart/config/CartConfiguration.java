@@ -1,6 +1,5 @@
-package com.ethercat.product.config;
+package com.ethercat.cart.config;
 
-import com.ethercat.config.CacheConfiguration;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -8,13 +7,12 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @program: b2c-store
- * @description: 商品模块的配置类
+ * @description: 购物车配置
  * @author: Ethercat
- * @create: 2022-11-20 00:20
+ * @create: 2022-11-26 00:52
  **/
 @Configuration
-public class ProductConfiguration extends CacheConfiguration {
-
+public class CartConfiguration {
     /**
      * mq序列化方式，选择json
      */

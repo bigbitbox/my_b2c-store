@@ -4,6 +4,8 @@ import com.ethercat.param.CartSaveParam;
 import com.ethercat.pojo.Cart;
 import com.ethercat.utils.R;
 
+import java.util.List;
+
 public interface CartService {
     /**
      * 购物车添加数据方法
@@ -32,4 +34,10 @@ public interface CartService {
      * @return
      */
     R remove(Cart cart);
+
+    /**
+     * 清空对应id的购物车项
+     * @param cartIds
+     */
+    void clearIds(List<Integer> cartIds);
 }

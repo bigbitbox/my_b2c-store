@@ -182,4 +182,16 @@ public class CartServiceimpl implements CartService {
 
         return R.ok("删除购物车数据成功");
     }
+
+    /**
+     * 清空对应id的购物车项
+     *
+     * @param cartIds
+     */
+    @Override
+    public void clearIds(List<Integer> cartIds) {
+        cartMapper.deleteBatchIds(cartIds);
+        
+        log.info("CartServiceimpl.clearIds业务结束，结果：{}",cartIds);
+    }
 }
