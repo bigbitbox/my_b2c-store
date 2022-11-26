@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ethercat.clients.CategoryClient;
 import com.ethercat.clients.SearchClient;
 import com.ethercat.param.ProductHotParam;
@@ -16,6 +17,7 @@ import com.ethercat.pojo.Product;
 import com.ethercat.product.mapper.PictureMapper;
 import com.ethercat.product.mapper.ProductMapper;
 import com.ethercat.product.service.ProductService;
+import com.ethercat.to.OrderToProduct;
 import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @program: b2c-store
@@ -33,7 +38,7 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class ProductServiceimpl implements ProductService {
+public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> implements ProductService {
 
     @Autowired
     PictureMapper pictureMapper;
@@ -258,5 +263,31 @@ public class ProductServiceimpl implements ProductService {
         List<Product> productList = productMapper.selectList(queryWrapper);
         log.info("ProductServiceimpl.cartList业务结束，结果：{}",productList);
         return productList;
+    }
+
+    /**
+     * 修改库存和增加销售量
+     *
+     * @param orderToProducts
+     */
+    @Override
+    public void subNumber(List<OrderToProduct> orderToProducts) {
+
+        //将集合转成map
+        Map<Integer, OrderToProduct> map = orderToProducts.stream().collect(Collectors.toMap(OrderToProduct::getProductId, v -> v));
+
+        //获取商品id集合
+        Set<Integer> productIds = map.keySet();
+        //查询集合对应的商品信息
+        List<Product> productList = productMapper.selectBatchIds(productIds);
+        //修改商品信息
+        for (Product product : productList) {
+            Integer num = map.get(product.getProductId()).getNum();
+            product.setProductNum(product.getProductNum() - num);
+            product.setProductSales(product.getProductSales()+num);
+        }
+        //批量更新
+        this.updateBatchById(productList);
+        log.info("ProductServiceimpl.subNumber业务结束，结果：库存和销售量的修改完毕");
     }
 }

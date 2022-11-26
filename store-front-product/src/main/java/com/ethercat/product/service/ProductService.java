@@ -1,15 +1,17 @@
 package com.ethercat.product.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ethercat.param.ProductHotParam;
 import com.ethercat.param.ProductIdParam;
 import com.ethercat.param.ProductIdsParam;
 import com.ethercat.param.ProductSearchParam;
 import com.ethercat.pojo.Product;
+import com.ethercat.to.OrderToProduct;
 import com.ethercat.utils.R;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductService extends IService<Product> {
     R promo(String categoryName);
 
     /**
@@ -76,4 +78,11 @@ public interface ProductService {
      * @return
      */
     List<Product> cartList(List<Integer> productIds);
+
+    /**
+     * 修改库存和增加销售量
+     * @param orderToProducts
+     */
+
+    void subNumber(List<OrderToProduct> orderToProducts);
 }
