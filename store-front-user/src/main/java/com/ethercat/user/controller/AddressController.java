@@ -1,6 +1,7 @@
 package com.ethercat.user.controller;
 
 import com.ethercat.param.AddressListParam;
+import com.ethercat.param.AddressParam;
 import com.ethercat.param.AddressRemoveParam;
 import com.ethercat.pojo.Address;
 import com.ethercat.user.service.AddressService;
@@ -37,10 +38,13 @@ public class AddressController {
     }
 
     @PostMapping("save")
-    public R save(@RequestBody @Validated Address address, BindingResult result){
+    public R save(@RequestBody @Validated AddressParam addressParam, BindingResult result){
         if (result.hasErrors()){
             return R.fail("参数异常，保存失败！");
         }
+
+        Address address =addressParam.getAdd();
+        address.setUserId(addressParam.getUserId());
 
         return  addressService.save(address);
     }

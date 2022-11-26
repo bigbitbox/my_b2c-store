@@ -96,7 +96,7 @@ public class OrderServiceimpl extends ServiceImpl<OrderMapper, Order>  implement
         rabbitTemplate.convertAndSend("topic.ex","sub.number",orderToProducts);
 
 
-        return null;
+        return R.ok("订单保存成功");
     }
 
     /**

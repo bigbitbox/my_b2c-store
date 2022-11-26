@@ -29,7 +29,7 @@ public class Address implements Serializable {
     private String linkman;
     @NotBlank
     private String phone;
-    @NotNull
+    @NotBlank
     private String address;
     @TableField("user_id")
     private Integer userId;
