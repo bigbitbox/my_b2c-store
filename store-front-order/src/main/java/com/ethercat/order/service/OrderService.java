@@ -20,4 +20,11 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     R save(OrderParam orderParam);
+
+    /**
+     * 分组查询订单数据
+     * @param userId
+     * @return
+     */
+    R list(Integer userId);
 }
