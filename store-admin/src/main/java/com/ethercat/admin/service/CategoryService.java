@@ -11,4 +11,6 @@ public interface CategoryService {
     R save(Category category);
 
     R remove(Integer categoryId);
+
+    R update(Category category);
 }

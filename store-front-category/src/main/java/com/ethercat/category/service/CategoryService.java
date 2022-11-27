@@ -35,4 +35,6 @@ public interface CategoryService {
 
 
     R adminRemove(Integer categoryId);
+
+    R adminUpdate(Category category);
 }

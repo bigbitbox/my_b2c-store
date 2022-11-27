@@ -30,4 +30,7 @@ public interface CategoryClient {
 
     @PostMapping("/category/admin/remove")
     R adminRemove(@RequestBody Integer categoryId);
+
+    @PostMapping("/category/admin/update")
+    R adminUpdate(@RequestBody Category category);
 }

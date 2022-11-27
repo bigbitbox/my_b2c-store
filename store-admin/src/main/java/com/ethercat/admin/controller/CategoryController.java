@@ -38,4 +38,9 @@ public class CategoryController {
     public R pageRemove(Integer categoryId){
         return categoryService.remove(categoryId);
     }
+
+    @PostMapping("update")
+    public R pageUpdate(Category category){
+        return categoryService.update(category);
+    }
 }

@@ -123,4 +123,21 @@ public class CategoryServiceimpl implements CategoryService {
 
         return R.ok("类别数据删除成功！");
     }
+
+    @Override
+    public R adminUpdate(Category category) {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category_name",category.getCategoryName());
+
+        Long aLong = categoryMapper.selectCount(queryWrapper);
+
+        if (aLong > 0) {
+            return R.fail("类别存在，修改失败");
+        }
+
+        int i = categoryMapper.updateById(category);
+        log.info("CategoryServiceimpl.adminUpdate业务结束，结果：{}",i);
+
+        return R.ok("类别数据修改成功！");
+    }
 }

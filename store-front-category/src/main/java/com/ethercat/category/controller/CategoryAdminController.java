@@ -39,5 +39,10 @@ public class CategoryAdminController {
         return categoryService.adminRemove(categoryId);
     }
 
+    @PostMapping("admin/update")
+    public R adminUpdate(@RequestBody Category category){
+        return categoryService.adminUpdate(category);
+    }
+
 
 }

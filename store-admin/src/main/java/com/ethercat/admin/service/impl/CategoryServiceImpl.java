@@ -51,4 +51,12 @@ public class CategoryServiceImpl implements CategoryService {
 
         return r;
     }
+
+    @CacheEvict(value = "list.category", allEntries = true)
+    @Override
+    public R update(Category category) {
+        R r = categoryClient.adminUpdate(category);
+        log.info("CategoryServiceImpl.update业务结束，结果：{}",r);
+        return r;
+    }
 }
