@@ -1,7 +1,11 @@
 package com.ethercat.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.constants.UserConstants;
+import com.ethercat.param.CartListParam;
+import com.ethercat.param.PageParam;
 import com.ethercat.param.UserCheckParam;
 import com.ethercat.param.UserLoginParam;
 import com.ethercat.pojo.User;
@@ -12,6 +16,8 @@ import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @program: b2c-store
@@ -100,5 +106,34 @@ public class UserServiceimpl implements UserService {
         log.info("UserServiceimpl.login业务结束，结果：{登录成功}");
         user.setPassword(null);
         return R.ok("登录成功",user);
+    }
+
+    @Override
+    public R listPage(PageParam pageParam) {
+
+        IPage<User> page = new Page<>(pageParam.getCurrentPage(),pageParam.getPageSize());
+
+        page = userMapper.selectPage(page, null);
+
+        List<User> records = page.getRecords();
+        long total = page.getTotal();
+
+        return R.ok("用户管理查询成功！",records,total);
+    }
+
+    /**
+     * 根据用户id删除数据
+     *
+     * @param cartListParam
+     * @return
+     */
+    @Override
+    public R remove(CartListParam cartListParam) {
+
+        int i = userMapper.deleteById(cartListParam.getUserId());
+
+        log.info("UserServiceimpl.remove业务结束，结果：{}",i);
+
+        return R.ok("用户数据删除成功！");
     }
 }

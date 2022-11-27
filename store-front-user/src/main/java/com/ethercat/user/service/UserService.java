@@ -1,10 +1,11 @@
 package com.ethercat.user.service;
 
+import com.ethercat.param.CartListParam;
+import com.ethercat.param.PageParam;
 import com.ethercat.param.UserCheckParam;
 import com.ethercat.param.UserLoginParam;
 import com.ethercat.pojo.User;
 import com.ethercat.utils.R;
-import org.springframework.stereotype.Service;
 
 public interface UserService {
 
@@ -24,4 +25,14 @@ public interface UserService {
      * @return 结果001 004
      */
     R login(UserLoginParam userLoginParam);
+
+
+    R listPage(PageParam pageParam);
+
+    /**
+     * 根据用户id删除数据
+     * @param cartListParam
+     * @return
+     */
+    R remove(CartListParam cartListParam);
 }
