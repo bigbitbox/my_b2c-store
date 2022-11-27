@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -56,5 +53,13 @@ public class AdminUserController {
         session.setAttribute("userInfo",user);
 
         return R.ok("登录成功");
+    }
+
+    @GetMapping("user/logout")
+    public R logout(HttpSession session){
+        //清空session即可
+        session.invalidate();
+
+        return R.ok("退出登录成功！");
     }
 }
