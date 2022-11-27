@@ -1,6 +1,8 @@
 package com.ethercat.clients;
 
+import com.ethercat.param.PageParam;
 import com.ethercat.param.ProductHotParam;
+import com.ethercat.pojo.Category;
 import com.ethercat.utils.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,4 +21,13 @@ public interface CategoryClient {
 
     @GetMapping("/category/list")
     R list();
+
+    @PostMapping("/category/admin/list")
+    R adminList(@RequestBody PageParam pageParam);
+
+    @PostMapping("/category/admin/save")
+    R adminSave(@RequestBody Category category);
+
+    @PostMapping("/category/admin/remove")
+    R adminRemove(@RequestBody Integer categoryId);
 }

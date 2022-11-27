@@ -136,4 +136,70 @@ public class UserServiceimpl implements UserService {
 
         return R.ok("用户数据删除成功！");
     }
+
+    /**
+     * 修改用户信息
+     *  1。账号密码不该
+     *  2. 密码需要数据库判断，是原来的密码，不处理
+     *  3. 如果是新密码，加密后更新
+     *  4.修改用户信息
+     * @param user
+     * @return
+     */
+    @Override
+    public R update(User user) {
+
+        //判断密码是否是原来的
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("user_id",user.getUserId());
+        userQueryWrapper.eq("password",user.getPassword());
+        Long aLong = userMapper.selectCount(userQueryWrapper);
+        if (aLong == 0) {
+            //新密码需要密码加密
+            user.setPassword(MD5Util.encode(user.getPassword()+UserConstants.USER_SLAT));
+        }
+
+        int i = userMapper.updateById(user);
+
+        log.info("UserServiceimpl.update业务结束，结果：{}",i);
+
+        return R.ok("用户信息修改成功");
+    }
+
+    /**
+     * 添加用户信息
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public R save(User user) {
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.eq("user_name",user.getUserName());
+
+        Long total = userMapper.selectCount(queryWrapper );
+
+        if(total > 0 ){
+            log.info("UserServiceimpl.register业务结束，结果：{}","账号已经存在，不可添加");
+            return R.fail("账号已经存在，不可添加");
+        }
+
+//        2.密码加密处理，要加盐处理
+        String newPwd = MD5Util.encode(user.getPassword() + UserConstants.USER_SLAT);
+        user.setPassword(newPwd);
+
+//        3.insert database
+        int rows = userMapper.insert(user);
+
+        if(rows == 0){
+            log.info("UserServiceimpl.register业务结束，结果：{数据插入失败，注册失败}");
+            return R.fail("添加失败！请稍后再试");
+        }
+
+        log.info("UserServiceimpl.register业务结束，结果：{注册成功}");
+        return R.ok("添加成功！");
+
+    }
 }

@@ -35,4 +35,20 @@ public interface UserService {
      * @return
      */
     R remove(CartListParam cartListParam);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    R update(User user);
+
+    /**
+     * 添加用户信息
+     *
+     * @param user
+     * @return
+     */
+
+    R save(User user);
 }

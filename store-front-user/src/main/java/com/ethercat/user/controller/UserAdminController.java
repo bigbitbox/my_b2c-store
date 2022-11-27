@@ -3,6 +3,7 @@ package com.ethercat.user.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.param.CartListParam;
 import com.ethercat.param.PageParam;
+import com.ethercat.pojo.User;
 import com.ethercat.user.service.UserService;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,17 @@ public class UserAdminController {
     public R remove(@RequestBody CartListParam CartListParam){
 
         return userService.remove(CartListParam);
+    }
+
+    @PostMapping("admin/update")
+    public R update(@RequestBody User user){
+
+        return userService.update(user);
+    }
+
+    @PostMapping("admin/save")
+    public R save(@RequestBody User user){
+
+        return userService.save(user);
     }
 }

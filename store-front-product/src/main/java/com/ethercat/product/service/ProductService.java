@@ -85,4 +85,12 @@ public interface ProductService extends IService<Product> {
      */
 
     void subNumber(List<OrderToProduct> orderToProducts);
+
+
+    /**
+     * 类别对应的商品数量查询
+     * @param categoryId
+     * @return
+     */
+    long adminCount(Integer categoryId);
 }

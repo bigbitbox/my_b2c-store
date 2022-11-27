@@ -4,6 +4,7 @@ import com.ethercat.admin.service.UserService;
 import com.ethercat.clients.UserClient;
 import com.ethercat.param.CartListParam;
 import com.ethercat.param.PageParam;
+import com.ethercat.pojo.User;
 import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,35 @@ public class UserServiceImpl implements UserService {
         R r = userClient.adminRemove(cartListParam);
         log.info("UserServiceImpl.userRemove业务结束，结果：{}",r);
 
+        return r;
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param user
+     * @return
+     */
+    @CacheEvict(value = "list.user",allEntries = true)
+    @Override
+    public R userUpdate(User user) {
+        R r = userClient.adminUpdate(user);
+        log.info("UserServiceImpl.userUpdate业务结束，结果：{}",r);
+
+        return r;
+    }
+
+    /**
+     * 添加用户信息
+     *
+     * @param user
+     * @return
+     */
+    @CacheEvict(value = "list.user",allEntries = true)
+    @Override
+    public R userSave(User user) {
+        R r = userClient.adminSave(user);
+        log.info("UserServiceImpl.userSave业务结束，结果：{}",r);
         return r;
     }
 }

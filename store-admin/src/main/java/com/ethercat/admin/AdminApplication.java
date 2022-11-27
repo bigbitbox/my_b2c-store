@@ -1,5 +1,6 @@
 package com.ethercat.admin;
 
+import com.ethercat.clients.CategoryClient;
 import com.ethercat.clients.UserClient;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableCaching
 @MapperScan(basePackages = "com.ethercat.admin.mapper")
 @SpringBootApplication
-@EnableFeignClients(clients = {UserClient.class})
+@EnableFeignClients(clients = {UserClient.class, CategoryClient.class})
 public class AdminApplication {
     public static void main(String[] args){
         SpringApplication.run(AdminApplication.class,args);

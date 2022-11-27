@@ -36,4 +36,7 @@ public interface ProductClient {
 
     @PostMapping("/product/cart/list")
     List<Product> cartList(@RequestBody ProductCollectParam productCollectParam);
+
+    @PostMapping("/product/admin/count")
+    Long adminCount(@RequestBody Integer categoryId);
 }

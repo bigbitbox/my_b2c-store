@@ -290,4 +290,24 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
         this.updateBatchById(productList);
         log.info("ProductServiceimpl.subNumber业务结束，结果：库存和销售量的修改完毕");
     }
+
+    /**
+     * 类别对应的商品数量查询
+     *
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public long adminCount(Integer categoryId) {
+
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category_id",categoryId);
+
+        Long aLong = baseMapper.selectCount(queryWrapper);
+
+        log.info("ProductServiceimpl.adminCount业务结束，结果：{}",aLong);
+        return aLong;
+    }
+
+
 }

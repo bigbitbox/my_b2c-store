@@ -3,6 +3,7 @@ package com.ethercat.admin.controller;
 import com.ethercat.admin.service.UserService;
 import com.ethercat.param.CartListParam;
 import com.ethercat.param.PageParam;
+import com.ethercat.pojo.User;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,4 +35,13 @@ public class UserController {
         return userService.userRemove(cartListParam);
     }
 
+    @PostMapping("update")
+    public R userUpdate(User user){
+        return userService.userUpdate(user);
+    }
+
+    @PostMapping("save")
+    public R userSave(User user){
+        return userService.userSave(user);
+    }
 }
