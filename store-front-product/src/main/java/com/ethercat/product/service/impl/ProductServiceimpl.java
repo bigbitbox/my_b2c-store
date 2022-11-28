@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ethercat.clients.CategoryClient;
 import com.ethercat.clients.SearchClient;
-import com.ethercat.param.ProductHotParam;
-import com.ethercat.param.ProductIdParam;
-import com.ethercat.param.ProductIdsParam;
-import com.ethercat.param.ProductSearchParam;
+import com.ethercat.param.*;
 import com.ethercat.pojo.Category;
 import com.ethercat.pojo.Picture;
 import com.ethercat.pojo.Product;
@@ -20,7 +17,10 @@ import com.ethercat.product.service.ProductService;
 import com.ethercat.to.OrderToProduct;
 import com.ethercat.utils.R;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -298,7 +298,7 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
      * @return
      */
     @Override
-    public long adminCount(Integer categoryId) {
+    public Long adminCount(Integer categoryId) {
 
         QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id",categoryId);
@@ -309,5 +309,30 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
         return aLong;
     }
 
+    @CacheEvict(value = "list.product", allEntries = true)
+    @Override
+    public R adminSave(ProductSaveParam productSaveParam) {
+        Product product = new Product();
+        BeanUtils.copyProperties(productSaveParam,product);
 
+        int insert = productMapper.insert(product);
+        log.info("ProductServiceimpl.adminSave业务结束，结果：{}",insert);
+
+        String pictures = productSaveParam.getPictures();
+        
+        if (StringUtils.isEmpty(pictures)){
+            // 截取特殊字符串的时候 // [] 包含 $ + * | ?
+            String[] urls = pictures.split("//+");
+            for (String url : urls) {
+                Picture picture = new Picture();
+                picture.setProductId(product.getProductId());
+                picture.setProductPicture(url);
+                pictureMapper.insert(picture);//插入商品的图片
+            }
+        }
+
+        //同步搜索服务的数据
+        searchClient.saveOrUpdate(product);
+        return R.ok("数据保存成功");
+    }
 }

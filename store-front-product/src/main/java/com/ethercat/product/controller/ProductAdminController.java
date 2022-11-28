@@ -1,6 +1,8 @@
 package com.ethercat.product.controller;
 
+import com.ethercat.param.ProductSaveParam;
 import com.ethercat.product.service.ProductService;
+import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +25,12 @@ public class ProductAdminController {
     private ProductService productService;
 
     @PostMapping("/admin/count")
-    public long adminCount(@RequestBody Integer categoryId){
+    public Long adminCount(@RequestBody Integer categoryId){
         return productService.adminCount(categoryId);
+    }
+
+    @PostMapping("/admin/save")
+    public R adminSave(@RequestBody ProductSaveParam productSaveParam){
+        return productService.adminSave(productSaveParam);
     }
 }

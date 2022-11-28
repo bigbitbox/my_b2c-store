@@ -2,6 +2,7 @@ package com.ethercat.clients;
 
 import com.ethercat.param.ProductCollectParam;
 import com.ethercat.param.ProductIdParam;
+import com.ethercat.param.ProductSaveParam;
 import com.ethercat.pojo.Product;
 import com.ethercat.utils.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -39,4 +40,7 @@ public interface ProductClient {
 
     @PostMapping("/product/admin/count")
     Long adminCount(@RequestBody Integer categoryId);
+
+    @PostMapping("/product/admin/save")
+    R adminSave(@RequestBody ProductSaveParam productSaveParam);
 }

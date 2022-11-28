@@ -13,4 +13,10 @@ public interface SearchClient {
 
     @PostMapping("/search/product")
     R search(@RequestBody ProductSearchParam productSearchParam);
+
+    @PostMapping("/search/save")
+    R saveOrUpdate(@RequestBody Product product);
+
+    @PostMapping("/search/remove")
+    R remove(@RequestBody Integer productId);
 }

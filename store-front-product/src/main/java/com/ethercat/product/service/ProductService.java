@@ -1,10 +1,7 @@
 package com.ethercat.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ethercat.param.ProductHotParam;
-import com.ethercat.param.ProductIdParam;
-import com.ethercat.param.ProductIdsParam;
-import com.ethercat.param.ProductSearchParam;
+import com.ethercat.param.*;
 import com.ethercat.pojo.Product;
 import com.ethercat.to.OrderToProduct;
 import com.ethercat.utils.R;
@@ -92,5 +89,7 @@ public interface ProductService extends IService<Product> {
      * @param categoryId
      * @return
      */
-    long adminCount(Integer categoryId);
+    Long adminCount(Integer categoryId);
+
+    R adminSave(ProductSaveParam productSaveParam);
 }
