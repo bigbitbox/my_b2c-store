@@ -50,4 +50,12 @@ public class ProductServiceImpl implements ProductService {
         log.info("ProductServiceImpl.update业务结束，结果：{}",r);
         return r;
     }
+
+    @Override
+    public R remove(Integer productId) {
+
+        R r = productClient.adminRemove(productId);
+        log.info("ProductServiceImpl.remove业务结束，结果：{}",r);
+        return r;
+    }
 }

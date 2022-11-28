@@ -2,6 +2,7 @@ package com.ethercat.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ethercat.param.OrderParam;
+import com.ethercat.param.PageParam;
 import com.ethercat.pojo.Order;
 import com.ethercat.utils.R;
 
@@ -29,4 +30,6 @@ public interface OrderService extends IService<Order> {
     R list(Integer userId);
 
     R removeCheck(Integer productId);
+
+    R adminList(PageParam pageParam);
 }

@@ -117,6 +117,7 @@ public class CollectServiceImpl implements CollectService {
 
         int rows = collectMapper.delete(queryWrapper);
         log.info("CollectServiceImpl.removeByPid业务结束，结果：{}",rows);
+
         return R.ok("收藏商品删除成功！");
     }
 }

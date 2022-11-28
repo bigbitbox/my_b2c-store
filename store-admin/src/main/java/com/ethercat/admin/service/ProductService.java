@@ -11,4 +11,6 @@ public interface ProductService {
     R save(ProductSaveParam productSaveParam);
 
     R update(Product product);
+
+    R remove(Integer productId);
 }

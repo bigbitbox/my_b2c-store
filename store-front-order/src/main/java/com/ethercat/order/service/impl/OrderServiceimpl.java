@@ -6,11 +6,13 @@ import com.ethercat.clients.ProductClient;
 import com.ethercat.order.mapper.OrderMapper;
 import com.ethercat.order.service.OrderService;
 import com.ethercat.param.OrderParam;
+import com.ethercat.param.PageParam;
 import com.ethercat.param.ProductCollectParam;
 import com.ethercat.pojo.Order;
 import com.ethercat.pojo.Product;
 import com.ethercat.to.OrderToProduct;
 import com.ethercat.utils.R;
+import com.ethercat.vo.AdminOrderVo;
 import com.ethercat.vo.CartVo;
 import com.ethercat.vo.OrderVo;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,9 @@ public class OrderServiceimpl extends ServiceImpl<OrderMapper, Order>  implement
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
 
     /**
@@ -162,5 +167,16 @@ public class OrderServiceimpl extends ServiceImpl<OrderMapper, Order>  implement
         }
 
         return R.ok("无订单引用，可以删除");
+    }
+
+    @Override
+    public R adminList(PageParam pageParam) {
+
+        int offset = (pageParam.getCurrentPage()-1)*pageParam.getPageSize();
+        int pageSize = pageParam.getPageSize();
+
+        List<AdminOrderVo> adminOrderVoList = orderMapper.selectAdminOrder(offset,pageSize);
+
+        return R.ok("订单数据查询成功！",adminOrderVoList);
     }
 }

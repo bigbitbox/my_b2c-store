@@ -62,4 +62,9 @@ public class ProductController {
     public R adminSave(Product product){
         return productService.update(product);
     }
+
+    @PostMapping("remove")
+    public R adminRemove(Integer productId){
+        return productService.remove(productId);
+    }
 }

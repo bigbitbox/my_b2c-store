@@ -1,8 +1,10 @@
 package com.ethercat.order.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ethercat.order.service.OrderService;
 import com.ethercat.param.CartListParam;
 import com.ethercat.param.OrderParam;
+import com.ethercat.param.PageParam;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -43,5 +45,10 @@ public class OrderController {
     @PostMapping("remove/check")
     public R removeCheck(@RequestBody Integer productId){
         return orderService.removeCheck(productId);
+    }
+
+    @PostMapping("admin/list")
+    public R adminList(@RequestBody PageParam PageParam){
+        return orderService.adminList(PageParam);
     }
 }

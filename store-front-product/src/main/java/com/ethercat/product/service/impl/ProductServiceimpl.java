@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ethercat.clients.CategoryClient;
-import com.ethercat.clients.SearchClient;
+import com.ethercat.clients.*;
 import com.ethercat.param.*;
 import com.ethercat.pojo.Category;
 import com.ethercat.pojo.Picture;
@@ -22,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -45,6 +45,15 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
 
     @Autowired
     private CategoryClient categoryClient;
+
+    @Autowired
+    private OrderClient orderClient;
+
+    @Autowired
+    private CartClient cartClient;
+
+    @Autowired
+    private CollectClient collectClient;
 
     @Autowired
     private SearchClient searchClient;
@@ -345,5 +354,45 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
 
 
         return null;
+    }
+
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "product.list",allEntries = true),
+                    @CacheEvict(value = "product",key = "#productId")
+            }
+    )
+    @Override
+    public R adminRemove(Integer productId) {
+
+        R r = cartClient.removeCheck(productId);
+
+        if ("004".equals(r.getCode())) {
+            log.info("ProductServiceimpl.adminRemove业务结束，结果：{}",r.getMsg());
+            return r;
+        }
+
+        r = orderClient.removeCheck(productId);
+
+        if ("004".equals(r.getCode())) {
+            log.info("ProductServiceimpl.adminRemove业务结束，结果：{}",r.getMsg());
+            return r;
+        }
+
+        //删除商品
+        productMapper.deleteById(productId);
+
+        //删除商品图片
+        QueryWrapper<Picture> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_id",productId);
+        pictureMapper.delete(queryWrapper);
+
+        //删除收藏中和本商品相关的
+        collectClient.remove(productId);
+
+        //同步数据
+
+
+        return R.ok("商品删除成功！");
     }
 }
