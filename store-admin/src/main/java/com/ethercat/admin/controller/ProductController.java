@@ -2,7 +2,9 @@ package com.ethercat.admin.controller;
 
 import com.ethercat.admin.service.ProductService;
 import com.ethercat.admin.utils.AliyunOSSUtils;
+import com.ethercat.param.ProductSaveParam;
 import com.ethercat.param.ProductSearchParam;
+import com.ethercat.pojo.Product;
 import com.ethercat.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +51,15 @@ public class ProductController {
         String url = aliyunOSSUtils.uploadImage(originalFilename, bytes, contentType, hours);
         System.out.println("url = " + url);
         return R.ok("图片上传成功！",url);
+    }
+
+    @PostMapping("save")
+    public R adminSave(ProductSaveParam productSaveParam){
+        return productService.save(productSaveParam);
+    }
+
+    @PostMapping("update")
+    public R adminSave(Product product){
+        return productService.update(product);
     }
 }

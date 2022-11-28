@@ -40,4 +40,6 @@ public interface CartService {
      * @param cartIds
      */
     void clearIds(List<Integer> cartIds);
+
+    R removeCheck(Integer productId);
 }

@@ -149,4 +149,18 @@ public class OrderServiceimpl extends ServiceImpl<OrderMapper, Order>  implement
         log.info("OrderServiceimpl.list业务结束，结果：{}",result);
         return ok;
     }
+
+    @Override
+    public R removeCheck(Integer productId) {
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_id",productId);
+
+        Long aLong = baseMapper.selectCount(queryWrapper);
+
+        if (aLong > 0) {
+            return R.fail("订单："+aLong+"项引用商品，不能删除!");
+        }
+
+        return R.ok("无订单引用，可以删除");
+    }
 }

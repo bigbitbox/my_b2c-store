@@ -92,4 +92,8 @@ public interface ProductService extends IService<Product> {
     Long adminCount(Integer categoryId);
 
     R adminSave(ProductSaveParam productSaveParam);
+
+    R adminUpdate(Product product);
+
+    R adminRemove(Integer productId);
 }

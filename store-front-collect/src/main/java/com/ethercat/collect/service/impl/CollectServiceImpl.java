@@ -107,4 +107,16 @@ public class CollectServiceImpl implements CollectService {
         return R.ok("收藏移除成功");
 
     }
+
+    @Override
+    public R removeByPid(Integer productId) {
+
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.eq("product_id",productId);
+
+        int rows = collectMapper.delete(queryWrapper);
+        log.info("CollectServiceImpl.removeByPid业务结束，结果：{}",rows);
+        return R.ok("收藏商品删除成功！");
+    }
 }

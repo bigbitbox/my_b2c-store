@@ -27,4 +27,6 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     R list(Integer userId);
+
+    R removeCheck(Integer productId);
 }

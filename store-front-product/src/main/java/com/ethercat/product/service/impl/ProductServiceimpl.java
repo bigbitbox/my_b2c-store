@@ -320,9 +320,9 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
 
         String pictures = productSaveParam.getPictures();
         
-        if (StringUtils.isEmpty(pictures)){
+        if (!StringUtils.isEmpty(pictures)){
             // 截取特殊字符串的时候 // [] 包含 $ + * | ?
-            String[] urls = pictures.split("//+");
+            String[] urls = pictures.split("\\+");
             for (String url : urls) {
                 Picture picture = new Picture();
                 picture.setProductId(product.getProductId());
@@ -334,5 +334,16 @@ public class ProductServiceimpl extends ServiceImpl<ProductMapper,Product> imple
         //同步搜索服务的数据
         searchClient.saveOrUpdate(product);
         return R.ok("数据保存成功");
+    }
+
+    @Override
+    public R adminUpdate(Product product) {
+
+        productMapper.updateById(product);
+
+        searchClient.saveOrUpdate(product);
+
+
+        return null;
     }
 }
