@@ -1,4 +1,4 @@
-### 项目一：B2C电商购物平台
+### B2C电商购物平台
 
 + **主要技术栈** SpringCloud、SpringBoot、Redis、ElasticSearch、MySql
 
